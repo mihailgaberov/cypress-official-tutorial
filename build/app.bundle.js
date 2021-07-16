@@ -31595,8 +31595,11 @@ var TodoApp = function (_Component) {
       (0, _service.saveTodo)(newTodo).then(function (_ref) {
         var data = _ref.data;
         return _this2.setState({
-          todos: _this2.state.todos.concat(data)
+          todos: _this2.state.todos.concat(data),
+          currentTodo: ''
         });
+      }).catch(function () {
+        return _this2.setState({ error: true });
       });
     }
   }, {
@@ -31616,6 +31619,11 @@ var TodoApp = function (_Component) {
               null,
               'todos'
             ),
+            this.state.error ? _react2.default.createElement(
+              'span',
+              { className: 'error' },
+              'Oh no!'
+            ) : null,
             _react2.default.createElement(_TodoForm2.default, {
               currentTodo: this.state.currentTodo,
               handleNewTodoChange: this.handleNewTodoChange,
@@ -34580,6 +34588,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
@@ -34597,7 +34607,7 @@ var TodoItem = function TodoItem(props) {
       _react2.default.createElement(
         "label",
         null,
-        ' '
+        props.name
       ),
       _react2.default.createElement("button", { className: "destroy" })
     )
@@ -34609,7 +34619,7 @@ exports.default = function (props) {
     "ul",
     { className: "todo-list" },
     props.todos.map(function (todo) {
-      return _react2.default.createElement(TodoItem, null);
+      return _react2.default.createElement(TodoItem, _extends({ key: todo.id }, todo));
     })
   );
 };
