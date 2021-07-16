@@ -1,6 +1,6 @@
 describe('Input form', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3030')
+    cy.visit('/')
   })
 
   it('focuses input on load', () => {
@@ -10,5 +10,13 @@ describe('Input form', () => {
   it('accepts input', () => {
     const typedText = 'Buy Milk'
     cy.get('.new-todo').type(typedText).should('have.value', typedText)
+  })
+
+  context('Form submission', () => {
+    it.only('Adds a new todo on submit', () => {
+      cy.get('.new-todo')
+      .type('Buy eggs')
+      .type('{enter}')
+    })
   })
 })
